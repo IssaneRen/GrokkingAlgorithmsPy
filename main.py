@@ -50,11 +50,35 @@ def sum41(num, arr):
         return num + arr[0]
     arr.pop(0)
     return sum41(num+arr[0], arr)
+
+class ListNode:
+    def __init__(self, val, next_node):
+        self.next = next_node
+        self.val = val
+
+# 习题2 计算列表包含的元素
+def custom_count_len(list_root):
+    if (list_root == None):
+        return 0
+    if (list_root.next == None):
+        return 1
+    return custom_count_len(list_root.next) + 1
+
     
 
 if __name__ == '__main__':
-    my_list = [1,33,7,93,5]
-    print(str(sum41(0, my_list))) # => 1
+    list_root = ListNode(1, None)
+    tmp = list_root
+    tmp.next = ListNode(3, None)
+    tmp = tmp.next
+    tmp.next = ListNode(2, None)
+    tmp = tmp.next
+    tmp.next = ListNode(4, None)
+    tmp = tmp.next
+    tmp.next = ListNode(5, None)
+    print(str(custom_count_len(list_root)))
+    #my_list = [1,33,7,93,5]
+    #print(str(sum41(0, my_list))) # => 1
     #print(str(binary_search(my_list, 3))) # => 1
     #print(binary_search(my_list, -1)) # => None
     #print('测试python-Lucius')
