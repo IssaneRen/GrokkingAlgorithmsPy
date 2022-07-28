@@ -64,19 +64,32 @@ def custom_count_len(list_root):
         return 1
     return custom_count_len(list_root.next) + 1
 
-    
+# 习题3 找出列表中最大的元素
+def find_max(val1, val2):
+    if (not val1):
+        return val2
+    if (not val2):
+        return val1
+    return max(val1, val2)
+
+def custom_count_max(list_root, cur_max):
+    if (list_root == None):
+        return cur_max
+    if (list_root.next == None):
+        return find_max(cur_max, list_root.val)
+    return custom_count_max(list_root.next, find_max(cur_max, list_root.val))
 
 if __name__ == '__main__':
     list_root = ListNode(1, None)
     tmp = list_root
     tmp.next = ListNode(3, None)
     tmp = tmp.next
-    tmp.next = ListNode(2, None)
+    tmp.next = ListNode(12, None)
     tmp = tmp.next
     tmp.next = ListNode(4, None)
     tmp = tmp.next
     tmp.next = ListNode(5, None)
-    print(str(custom_count_len(list_root)))
+    print(str(custom_count_max(list_root, None)))
     #my_list = [1,33,7,93,5]
     #print(str(sum41(0, my_list))) # => 1
     #print(str(binary_search(my_list, 3))) # => 1
