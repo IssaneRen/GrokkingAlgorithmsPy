@@ -79,17 +79,30 @@ def custom_count_max(list_root, cur_max):
         return find_max(cur_max, list_root.val)
     return custom_count_max(list_root.next, find_max(cur_max, list_root.val))
 
+    
+# 4.2 快速排序
+def quick_sort(array):
+    if (len(array) <= 1):
+        return array
+    else:
+        pivot = array[0]
+        less = [i for i in array[1:] if (i <= pivot)]
+        more = [i for i in array[1:] if (i > pivot)]
+        return quick_sort(less) + [pivot] + quick_sort(more)
+
 if __name__ == '__main__':
-    list_root = ListNode(1, None)
-    tmp = list_root
-    tmp.next = ListNode(3, None)
-    tmp = tmp.next
-    tmp.next = ListNode(12, None)
-    tmp = tmp.next
-    tmp.next = ListNode(4, None)
-    tmp = tmp.next
-    tmp.next = ListNode(5, None)
-    print(str(custom_count_max(list_root, None)))
+    arr = [22,1,5,81,5,78,546,1,84,44]
+    print(str(quick_sort(arr)))
+    #list_root = ListNode(1, None)
+    #tmp = list_root
+    #tmp.next = ListNode(3, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(12, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(4, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(5, None)
+    #print(str(custom_count_max(list_root, None)))
     #my_list = [1,33,7,93,5]
     #print(str(sum41(0, my_list))) # => 1
     #print(str(binary_search(my_list, 3))) # => 1
