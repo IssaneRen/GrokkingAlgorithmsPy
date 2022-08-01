@@ -90,9 +90,70 @@ def quick_sort(array):
         more = [i for i in array[1:] if (i > pivot)]
         return quick_sort(less) + [pivot] + quick_sort(more)
 
+# 第七章 狄克斯特拉算法
+
+# 7.1 构建示例DAG 有向无环图
+def generate_dag():
+    diagram = {}
+    diagram["start"] = {}
+    diagram["start"]["A"] = 6
+    diagram["start"]["B"] = 2
+    diagram["A"] = {}
+    diagram["A"]["end"] = 1
+    diagram["B"] = {}
+    diagram["B"]["A"] = 3
+    diagram["B"]["end"] = 5
+    diagram["end"] = {}
+    return diagram
+    
+# 7.5 狄克斯特拉算法 实现
+
+def add_init_nodes(diagram, node, costs):
+    for n in diagram[node].keys():
+        costs[n] = diagram[node][n]
+    for n in diagram.keys():
+        if (n not in costs):
+            costs[n] = float("inf")
+
+def find_lowest_cost_node(costs, known_nodes):
+    min_cost = float("inf")
+    lowest_cost_node = None
+    for node in costs.keys():
+        if (node not in known_nodes and node in costs and costs[node] < min_cost):
+            min_cost = costs[node]
+            lowest_cost_node = node
+    return lowest_cost_node, min_cost
+
+def dijkstra_alg(diagram, start, end):
+    # 1. 消耗时间
+    costs = {}
+    # 2. 父节点
+    parents = {}
+    parents["start"] = 0
+    # 3. 已经遍历过的内容
+    known_nodes = []
+    add_init_nodes(diagram, start, costs)
+    current_node, current_cost = find_lowest_cost_node(costs, known_nodes)
+    while current_node != None:
+        print("正在查找 " + current_node + " 节点...")
+        known_nodes.append(current_node)
+        for n in diagram[current_node].keys():
+            if ((n in costs and (costs[n] > (current_cost + diagram[current_node][n]))) or n not in costs):
+                costs[n] = current_cost + diagram[current_node][n]
+                parents[n] = current_node
+        current_node, current_cost = find_lowest_cost_node(costs, known_nodes)
+    # 退出循环表示完全遍历完成，现在找到路径
+    final_cost = float("inf")
+    if (end in costs):
+        final_cost = costs[end]
+    return final_cost
+
 if __name__ == '__main__':
-    arr = [22,1,5,81,5,78,546,1,84,44]
-    print(str(quick_sort(arr)))
+    diagram = generate_dag()
+    print(str(dijkstra_alg(diagram, "start", "end")))
+
+    #arr = [22,1,5,81,5,78,546,1,84,44]
+    #print(str(quick_sort(arr)))
     #list_root = ListNode(1, None)
     #tmp = list_root
     #tmp.next = ListNode(3, None)
