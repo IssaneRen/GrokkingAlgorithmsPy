@@ -90,6 +90,25 @@ def quick_sort(array):
         more = [i for i in array[1:] if (i > pivot)]
         return quick_sort(less) + [pivot] + quick_sort(more)
 
+
+    #arr = [22,1,5,81,5,78,546,1,84,44]
+    #print(str(quick_sort(arr)))
+    #list_root = ListNode(1, None)
+    #tmp = list_root
+    #tmp.next = ListNode(3, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(12, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(4, None)
+    #tmp = tmp.next
+    #tmp.next = ListNode(5, None)
+    #print(str(custom_count_max(list_root, None)))
+    #my_list = [1,33,7,93,5]
+    #print(str(sum41(0, my_list))) # => 1
+    #print(str(binary_search(my_list, 3))) # => 1
+    #print(binary_search(my_list, -1)) # => None
+    #print('测试python-Lucius')
+
 # 第七章 狄克斯特拉算法
 
 # 7.1 构建示例DAG 有向无环图
@@ -148,24 +167,10 @@ def dijkstra_alg(diagram, start, end):
         final_cost = costs[end]
     return final_cost
 
-if __name__ == '__main__':
+def test_dijkstra():
     diagram = generate_dag()
     print(str(dijkstra_alg(diagram, "start", "end")))
 
-    #arr = [22,1,5,81,5,78,546,1,84,44]
-    #print(str(quick_sort(arr)))
-    #list_root = ListNode(1, None)
-    #tmp = list_root
-    #tmp.next = ListNode(3, None)
-    #tmp = tmp.next
-    #tmp.next = ListNode(12, None)
-    #tmp = tmp.next
-    #tmp.next = ListNode(4, None)
-    #tmp = tmp.next
-    #tmp.next = ListNode(5, None)
-    #print(str(custom_count_max(list_root, None)))
-    #my_list = [1,33,7,93,5]
-    #print(str(sum41(0, my_list))) # => 1
-    #print(str(binary_search(my_list, 3))) # => 1
-    #print(binary_search(my_list, -1)) # => None
-    #print('测试python-Lucius')
+if __name__ == '__main__':
+    # 测试 7.5
+    test_dijkstra()
