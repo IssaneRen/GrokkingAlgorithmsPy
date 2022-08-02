@@ -171,6 +171,69 @@ def test_dijkstra():
     diagram = generate_dag()
     print(str(dijkstra_alg(diagram, "start", "end")))
 
+# 第八章 贪婪算法
+
+# 8.3 集合覆盖问题 - 找到最少覆盖电台
+state_id = "id"
+state_nv = "nv"
+state_ut = "ut"
+state_wa = "wa"
+state_mt = "mt"
+state_or = "or"
+state_ca = "ca"
+state_az = "az"
+
+def get_all_states():
+    return set([
+        state_id,
+        state_nv,
+        state_ut,
+        state_wa,
+        state_mt,
+        state_or,
+        state_ca,
+        state_az,
+    ])
+    
+def get_stations():
+    stations = {}
+    stations["k1"] = set([state_id,state_nv,state_ut])
+    stations["k2"] = set([state_wa,state_id,state_mt])
+    stations["k3"] = set([state_or,state_nv,state_ca])
+    stations["k4"] = set([state_nv,state_ut])
+    stations["k5"] = set([state_ca,state_az])
+    return stations
+
+def find_appromix_best_stations():
+    stations = []
+    # 1. 需要覆盖的全部洲集合
+    current_need_cover = get_all_states()
+    # 2. 记录所有可以取的电台
+    all_stations = get_stations()
+    # 3. 结果的station表
+    stations_result = []
+
+    tmp_cover = set([])
+    # 循环： 只要需要覆盖的全部洲没有都被搞掉，就继续循环 todo 这里缺少一个保险容错，有可能所有的电台并不能覆盖所有的洲？ 但是现在洲都是从电台map中拿取的，所以应该不存在此问题
+    while current_need_cover:
+        current_best_station = None
+        current_best_cover = set([])
+        for station, station_cover_states_set in all_stations.items():
+            tmp_cover = station_cover_states_set & current_need_cover
+            if (len(tmp_cover) > len(current_best_cover)):
+                current_best_cover = tmp_cover
+                current_best_station = station
+        current_need_cover -= current_best_cover
+        del all_stations[current_best_station]
+        stations_result.append(current_best_station)
+    return stations_result
+
+def test_station_for_states():
+    print("test_station_for_states" + str(find_appromix_best_stations()))
+
+
 if __name__ == '__main__':
     # 测试 7.5
-    test_dijkstra()
+    # test_dijkstra()
+    # 测试 8.3
+    test_station_for_states()
